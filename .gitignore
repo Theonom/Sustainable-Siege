@@ -1,0 +1,10 @@
+Sustainable Siege/Library/* 
+Sustainable Siege/Logs/* 
+Sustainable Siege/Temp/*
+Sustainable Siege/.vs/* 
+Sustainable Siege/obj/*  
+ 
+Sustainable Siege/.vsconfig
+Sustainable Siege/*.sln 
+Sustainable Siege/*.csproj 
+
