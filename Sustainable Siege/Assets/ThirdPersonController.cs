@@ -49,6 +49,12 @@ public class ThirdPersonController : MonoBehaviour
     private void HandleCameraRotation()
     {
         float cameraRotationInput = Input.GetAxis("Mouse X") * cameraRotationSpeed;
-        cam.RotateAround(player.position, Vector3.up, cameraRotationInput);
+        player.Rotate(Vector3.up, cameraRotationInput);
+
+        // Reset camera rotation if moving backward
+        if (moveDirection.z < 0.0f)
+        {
+            cam.rotation = Quaternion.Euler(cam.rotation.eulerAngles.x, player.rotation.eulerAngles.y, cam.rotation.eulerAngles.z);
+        }
     }
 }
