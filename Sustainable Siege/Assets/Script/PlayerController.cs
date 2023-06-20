@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 4.0f;
     public float rotationSmoothTime = 0.08f;
 
+    public bool cameraEnemy;
+    public GameObject camEnemy, camPlayer;
+
     private CharacterController controller;
     private Vector3 moveDirection;
     private float rotationSmoothVelocity;
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        cameraEnemy = false;
     }
 
     private void Update()
@@ -62,5 +66,17 @@ public class PlayerController : MonoBehaviour
     public void ChangeCamera()
     {
         //ubah kamera
+        if (cameraEnemy == false)
+        {
+            camPlayer.SetActive(false);
+            camEnemy.SetActive(true);
+            cameraEnemy = true;
+        }
+        else
+        {
+            camPlayer.SetActive(true);
+            camEnemy.SetActive(false);
+            cameraEnemy = false;
+        }
     }
 }
