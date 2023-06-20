@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class ThirdPersonController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public Transform player;
     public Transform cam;
+    public Joystick joystick;
 
-    public float speed = 6.0f;
-    public float rotationSmoothTime = 0.12f;
-    public float cameraRotationSpeed = 2.0f;
+    public float speed = 4.0f;
+    public float rotationSmoothTime = 0.08f;
 
     private CharacterController controller;
     private Vector3 moveDirection;
@@ -21,14 +20,13 @@ public class ThirdPersonController : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
-        HandleCameraRotation();
+        Movement();
     }
 
-    private void HandleMovement()
+    private void Movement()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = joystick.Horizontal;
+        float vertical = joystick.Vertical;
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
 
         if (direction.magnitude >= 0.1f)
@@ -46,15 +44,23 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
 
-    private void HandleCameraRotation()
+    public void PlayerAttack()
     {
-        float cameraRotationInput = Input.GetAxis("Mouse X") * cameraRotationSpeed;
-        player.Rotate(Vector3.up, cameraRotationInput);
+        //Menembak musuh
+    }
 
-        // Reset camera rotation if moving backward
-        if (moveDirection.z < 0.0f)
-        {
-            cam.rotation = Quaternion.Euler(cam.rotation.eulerAngles.x, player.rotation.eulerAngles.y, cam.rotation.eulerAngles.z);
-        }
+    public void SortTrash()
+    {
+        //pilah sampah
+    }
+
+    public void Upgrade()
+    {
+        //upgrade senjata
+    }
+
+    public void ChangeCamera()
+    {
+        //ubah kamera
     }
 }
