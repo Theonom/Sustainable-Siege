@@ -4,17 +4,17 @@ public class PlayerController : MonoBehaviour
 {
     public Transform cam;
     public Joystick joystick;
-
-    public float speed = 4.0f;
-    public float rotationSmoothTime = 0.08f;
-
-    public bool cameraEnemy;
     public GameObject camEnemy, camPlayer;
+
+    public float speed;
+    public float rotationSmoothTime;
+    public bool bringTrash;
 
     private CharacterController controller;
     private Vector3 moveDirection;
     private float rotationSmoothVelocity;
     private float targetRotation;
+    private bool cameraEnemy;
 
     private void Start()
     {
@@ -56,6 +56,14 @@ public class PlayerController : MonoBehaviour
     public void SortTrash()
     {
         //pilah sampah
+        if (bringTrash == false)
+        {
+            bringTrash = true;
+        }
+        else
+        {
+            bringTrash = false;
+        }
     }
 
     public void Upgrade()
@@ -65,7 +73,6 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeCamera()
     {
-        //ubah kamera
         if (cameraEnemy == false)
         {
             camPlayer.SetActive(false);
