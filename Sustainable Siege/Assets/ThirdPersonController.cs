@@ -27,19 +27,15 @@ public class ThirdPersonController : MonoBehaviour
 
     private void HandleMovement()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxis("Joystick Horizontal");
+        float vertical = Input.GetAxis("Joystick Vertical");
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
 
         if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             targetRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSmoothVelocity, rotationSmoothTime);
-
-            if (vertical > 0.0f)
-            {
-                transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
-            }
+            transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
 
             moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
@@ -50,11 +46,5 @@ public class ThirdPersonController : MonoBehaviour
     {
         float cameraRotationInput = Input.GetAxis("Mouse X") * cameraRotationSpeed;
         player.Rotate(Vector3.up, cameraRotationInput);
-
-        // Reset camera rotation if moving backward
-        if (moveDirection.z < 0.0f)
-        {
-            cam.rotation = Quaternion.Euler(cam.rotation.eulerAngles.x, player.rotation.eulerAngles.y, cam.rotation.eulerAngles.z);
-        }
     }
 }
