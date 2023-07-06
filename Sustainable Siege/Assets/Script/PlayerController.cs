@@ -5,10 +5,13 @@ public class PlayerController : MonoBehaviour
     public Transform cam;
     public Joystick joystick;
     public GameObject camEnemy, camPlayer;
+    public LayerMask groundedLayers;
 
-    public float speed;
-    public float rotationSmoothTime;
-    public bool bringTrash;
+    public float speed, rotationSmoothTime;
+    public float groundedOffset = -0.14f;
+    public float groundedRadius = 0.25f;
+    public float gravity = -1f;
+    public bool bringTrash, grounded;
 
     private CharacterController controller;
     private Vector3 moveDirection;
@@ -25,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Movement();
+        GroundedCheck();
+        Gravity();
     }
 
     private void Movement()
@@ -40,7 +45,22 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
 
             moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
+            moveDirection.y += Time.deltaTime;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+        }
+    }
+
+    private void GroundedCheck()
+    {
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - groundedOffset, transform.position.z);
+        grounded = Physics.CheckSphere(spherePosition, groundedRadius, groundedLayers, QueryTriggerInteraction.Ignore);
+    }
+
+    private void Gravity()
+    {
+        if (!grounded)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + gravity * Time.deltaTime, transform.position.z);
         }
     }
 
