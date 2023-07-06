@@ -15,12 +15,16 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 moveDirection;
+    private Animator animator;
+
     private float rotationSmoothVelocity;
     private float targetRotation;
     private bool cameraEnemy;
+    public float timerAttack;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         cameraEnemy = false;
     }
@@ -30,6 +34,12 @@ public class PlayerController : MonoBehaviour
         Movement();
         GroundedCheck();
         Gravity();
+
+        timerAttack += Time.deltaTime;
+        if (timerAttack >= 1.10)
+        {
+            animator.SetBool("Attack", false);
+        }
     }
 
     private void Movement()
@@ -48,6 +58,8 @@ public class PlayerController : MonoBehaviour
             moveDirection.y += Time.deltaTime;
             controller.Move(moveDirection.normalized * speed * Time.deltaTime);
         }
+
+        animator.SetFloat("Speed", Mathf.Abs(horizontal + vertical));
     }
 
     private void GroundedCheck()
@@ -67,6 +79,8 @@ public class PlayerController : MonoBehaviour
     public void PlayerAttack()
     {
         //Menembak musuh
+        animator.SetBool("Attack", true);
+        timerAttack = 0;
     }
 
     public void SortTrash()
