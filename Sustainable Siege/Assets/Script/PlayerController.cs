@@ -4,7 +4,6 @@ public class PlayerController : MonoBehaviour
 {
     public Transform cam;
     public Joystick joystick;
-    public GameObject camEnemy, camPlayer;
     public LayerMask groundedLayers;
 
     public float speed, rotationSmoothTime;
@@ -19,14 +18,12 @@ public class PlayerController : MonoBehaviour
 
     private float rotationSmoothVelocity;
     private float targetRotation;
-    private bool cameraEnemy;
-    public float timerAttack;
+    private float timerAttack;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        cameraEnemy = false;
     }
 
     private void Update()
@@ -81,39 +78,5 @@ public class PlayerController : MonoBehaviour
         //Menembak musuh
         animator.SetBool("Attack", true);
         timerAttack = 0;
-    }
-
-    public void SortTrash()
-    {
-        //pilah sampah
-        if (bringTrash == false)
-        {
-            bringTrash = true;
-        }
-        else
-        {
-            bringTrash = false;
-        }
-    }
-
-    public void Upgrade()
-    {
-        //upgrade senjata
-    }
-
-    public void ChangeCamera()
-    {
-        if (cameraEnemy == false)
-        {
-            camPlayer.SetActive(false);
-            camEnemy.SetActive(true);
-            cameraEnemy = true;
-        }
-        else
-        {
-            camPlayer.SetActive(true);
-            camEnemy.SetActive(false);
-            cameraEnemy = false;
-        }
     }
 }

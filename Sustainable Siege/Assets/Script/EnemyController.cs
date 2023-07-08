@@ -4,31 +4,52 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float speed;
+    public float speed, attackInterval;
+    public int attackDamage;
 
+    private GameObject gameController;
     private Animator animator;
     private int attack;
+    private float timerAttack;
 
     void Start()
     {
+        gameController = GameObject.FindGameObjectWithTag("GameController");
         animator = GetComponent<Animator>();
         attack = Animator.StringToHash("Attack");
     }
 
     void Update()
     {
+        timerAttack += Time.deltaTime;
+
         Movement();
+
+        if(animator.GetBool("Attack") == true)
+        {
+            if(timerAttack > attackInterval)
+            {
+                gameController.GetComponent<GameController>().hpWall -= attackDamage;
+                timerAttack -= attackInterval;
+            }
+        }
     }
 
     public void Movement()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime);
+
+        if (gameController.GetComponent<GameController>().hpWall == 0)
+        {
+            animator.SetBool("Attack", false);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Wall")
         {
+            timerAttack = 0;
             animator.SetBool(attack, true);
             speed = 1;
         }

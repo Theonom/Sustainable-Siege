@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManagerEnemy : MonoBehaviour
 {
     public Vector3 enemySpawnAreaMin;
     public Vector3 enemySpawnAreaMax;
@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
         GenerateEnemy(new Vector3(Random.Range(enemySpawnAreaMin.x, enemySpawnAreaMax.x), transform.position.y, Random.Range(enemySpawnAreaMin.z, enemySpawnAreaMax.z)));
     }
 
-    private void GenerateEnemy(Vector3 position)
+    public void GenerateEnemy(Vector3 position)
     {
         if(enemyList.Count >= maxEnemy)
         {
@@ -52,7 +52,7 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        GameObject enemy = Instantiate(enemyTemplate, new Vector3(position.x, transform.position.y, position.z), Quaternion.identity);
+        GameObject enemy = Instantiate(enemyTemplate, new Vector3(position.x, transform.position.y, position.z), Quaternion.identity, transform);
         enemyList.Add(enemy);
     }
 }
