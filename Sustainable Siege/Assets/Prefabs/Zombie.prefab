@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 622372780}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -237,9 +237,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  attackInterval: 10
+  attackInterval: 15
   attackDamage: 10
-  timerAttack: 0
+  hpEnemy: 0
 --- !u!136 &622372780
 CapsuleCollider:
   m_ObjectHideFlags: 0

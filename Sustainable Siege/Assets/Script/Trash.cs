@@ -25,23 +25,23 @@ public class Trash : MonoBehaviour
 
                 if (organik == true)
                 {
-                    gameController.GetComponent<GameController>().trash = "Organik";
+                    gameController.GetComponent<GameController>().trash = "Apel";
                 }
                 if (kertas == true)
                 {
-                    gameController.GetComponent<GameController>().trash = "Kertas";
+                    gameController.GetComponent<GameController>().trash = "Kardus";
                 }
                 if (residu == true)
                 {
-                    gameController.GetComponent<GameController>().trash = "Residu";
+                    gameController.GetComponent<GameController>().trash = "Rokok";
                 }
                 if (anorganik == true)
                 {
-                    gameController.GetComponent<GameController>().trash = "Anorganik";
+                    gameController.GetComponent<GameController>().trash = "Kaleng";
                 }
                 if (bTiga == true)
                 {
-                    gameController.GetComponent<GameController>().trash = "B3";
+                    gameController.GetComponent<GameController>().trash = "Botol Kaca";
                 }
             }
         }

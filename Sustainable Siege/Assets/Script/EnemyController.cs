@@ -6,8 +6,9 @@ public class EnemyController : MonoBehaviour
 {
     public float speed, attackInterval;
     public int attackDamage;
+    public float hpEnemy;
 
-    private GameObject gameController;
+    private GameObject gameController, player;
     private Animator animator;
     private int attack;
     private float timerAttack;
@@ -15,8 +16,10 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController");
+        player = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
         attack = Animator.StringToHash("Attack");
+        hpEnemy = 100;
     }
 
     void Update()
@@ -32,6 +35,12 @@ public class EnemyController : MonoBehaviour
                 gameController.GetComponent<GameController>().hpWall -= attackDamage;
                 timerAttack -= attackInterval;
             }
+        }
+
+        if (hpEnemy <= 0)
+        {
+            gameController.GetComponent<GameController>().zombieDead += 1;
+            Destroy(gameObject);
         }
     }
 
@@ -52,6 +61,14 @@ public class EnemyController : MonoBehaviour
             timerAttack = 0;
             animator.SetBool(attack, true);
             speed = 1;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            hpEnemy -= player.GetComponent<PlayerController>().bulletDamage;
         }
     }
 }

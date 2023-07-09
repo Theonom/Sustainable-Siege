@@ -5,17 +5,22 @@ public class PlayerController : MonoBehaviour
     public Transform cam;
     public Joystick joystick;
     public LayerMask groundedLayers;
+    public GameObject bulletTemplate;
+    public Transform bulletSpawnPoint;
 
-    public float speed, rotationSmoothTime;
+    public float speed, bulletSpeed, rotationSmoothTime;
     public float groundedOffset = -0.14f;
     public float groundedRadius = 0.25f;
     public float gravity = -1f;
     public bool bringTrash, grounded;
+    public float bulletDamage;
 
     private CharacterController controller;
     private Vector3 moveDirection;
     private Animator animator;
+    private GameObject gameController;
 
+    private float speedCharacter;
     private float rotationSmoothVelocity;
     private float targetRotation;
     private float timerAttack;
@@ -24,6 +29,9 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        gameController = GameObject.FindGameObjectWithTag("GameController");
+        speedCharacter = speed;
+        bulletDamage = 50;
     }
 
     private void Update()
@@ -36,6 +44,7 @@ public class PlayerController : MonoBehaviour
         if (timerAttack >= 1.10)
         {
             animator.SetBool("Attack", false);
+            speedCharacter = speed;
         }
     }
 
@@ -53,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
             moveDirection.y += Time.deltaTime;
-            controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+            controller.Move(moveDirection.normalized * speedCharacter * Time.deltaTime);
         }
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal + vertical));
@@ -75,8 +84,19 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerAttack()
     {
-        //Menembak musuh
-        animator.SetBool("Attack", true);
-        timerAttack = 0;
+        if (gameController.GetComponent<GameController>().sumBullet >= 1)
+        {
+            GenerateBullet();
+            animator.SetBool("Attack", true);
+            speedCharacter = 0;
+            timerAttack = 0;
+            gameController.GetComponent<GameController>().sumBullet -= 1;
+        }
+    }
+
+    public void GenerateBullet()
+    {
+        GameObject bullet = Instantiate(bulletTemplate, bulletSpawnPoint.position, bulletTemplate.transform.rotation, bulletSpawnPoint);
+        bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.forward * bulletSpeed;
     }
 }
