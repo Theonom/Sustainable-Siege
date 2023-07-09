@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Ground
   - Bullet
+  - Music
   layers:
   - Default
   - TransparentFX
