@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public List<GameObject> wall;
-    public GameObject camEnemy, camPlayer;
+    public GameObject camEnemy, camPlayer, gameOver;
     public Slider hpSlider;
     public Text zombieText, sumTrashText, timeText, trasText, gunLevelText, sumBulletText, coinText; 
     public int hpWall, maxHpWall, sumBullet, sumCoin, zombieDead, sumTrash, gunLevel;
@@ -57,6 +58,7 @@ public class GameController : MonoBehaviour
     {
         if(hpWall <= 0)
         {
+            gameOver.SetActive(true);
             for(int i = 0; i < wall.Count; i++)
             {
                 wall[i].SetActive(false);
@@ -194,5 +196,30 @@ public class GameController : MonoBehaviour
         gunLevelText.text = gunLevel.ToString();
         sumBulletText.text = sumBullet.ToString();
         coinText.text = sumCoin.ToString();
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene("Gameplay");
+    }
+
+    public void Quit()
+    {
+
     }
 }

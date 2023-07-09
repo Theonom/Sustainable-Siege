@@ -10,20 +10,16 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
+        music = GameObject.FindGameObjectWithTag("Music");
         soundOn.SetActive(true);
         soundOff.SetActive(false);
         music.SetActive(true);
         sound = true;
     }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(music);
-    }
-
     public void PlayGame()
     {
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene("Instruction");
     }
 
     public void Credit()

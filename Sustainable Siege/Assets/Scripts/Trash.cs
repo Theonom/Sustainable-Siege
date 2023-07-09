@@ -20,7 +20,7 @@ public class Trash : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                gameObject.SetActive(false);
+                Destroy(gameObject);
                 player.GetComponent<PlayerController>().bringTrash = true;
 
                 if (organik == true)
