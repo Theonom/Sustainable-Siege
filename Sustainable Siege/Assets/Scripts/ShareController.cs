@@ -39,7 +39,8 @@ public class ShareController : MonoBehaviour
         string filePath = Path.Combine(Application.temporaryCachePath, "Share image.png");
         File.WriteAllBytes(filePath, ss.EncodeToPNG());
 
-        // To avoid memory leaks
         Destroy(ss);
+
+        new NativeShare().AddFile(filePath).SetSubject("Tap the Square").SetText(message).Share();
     }
 }
