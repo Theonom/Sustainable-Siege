@@ -9,7 +9,8 @@ public class GameController : MonoBehaviour
     public List<GameObject> wall;
     public GameObject camEnemy, camPlayer, gameOver;
     public Slider hpSlider;
-    public Text zombieText, sumTrashText, timeText, trasText, gunLevelText, sumBulletText, coinText; 
+    public Text zombieText, sumTrashText, timeText, trasText, gunLevelText, sumBulletText, coinText;
+    public AudioSource upgrade, soundTrue, soundFalse, gameoverSound;
     public int hpWall, maxHpWall, sumBullet, sumCoin, zombieDead, sumTrash, gunLevel;
     public bool sortTrash;
     public string trash, trashBox;
@@ -36,6 +37,9 @@ public class GameController : MonoBehaviour
         Information();
         SetHelthWall();
 
+        StateText.sumZombie = zombieDead.ToString();
+        StateText.sumTrash = sumTrash.ToString();
+
         if (hpWall >= maxHpWall)
         {
             hpWall = maxHpWall;
@@ -59,6 +63,7 @@ public class GameController : MonoBehaviour
         if(hpWall <= 0)
         {
             gameOver.SetActive(true);
+            gameoverSound.enabled = true;
             for(int i = 0; i < wall.Count; i++)
             {
                 wall[i].SetActive(false);
@@ -78,6 +83,7 @@ public class GameController : MonoBehaviour
                 hpWall += 10;
                 sumTrashOrganik += 1;
                 sumTrash += 1;
+                soundTrue.Play();
             }
             else if (trash == "Kardus" && trashBox == "Kertas")
             {
@@ -85,6 +91,7 @@ public class GameController : MonoBehaviour
                 hpWall += 10;
                 sumTrashKertas += 1;
                 sumTrash += 1;
+                soundTrue.Play();
             }
             else if (trash == "Rokok" && trashBox == "Residu")
             {
@@ -92,6 +99,7 @@ public class GameController : MonoBehaviour
                 hpWall += 10;
                 sumTrashResidu += 1;
                 sumTrash += 1;
+                soundTrue.Play();
             }
             else if (trash == "Kaleng" && trashBox == "Anorganik")
             {
@@ -99,6 +107,7 @@ public class GameController : MonoBehaviour
                 hpWall += 10;
                 sumTrashAnorganik += 1;
                 sumTrash += 1;
+                soundTrue.Play();
             }
             else if (trash == "Botol Kaca" && trashBox == "B3")
             {
@@ -106,10 +115,12 @@ public class GameController : MonoBehaviour
                 hpWall += 10;
                 sumTrashBtiga += 1;
                 sumTrash += 1;
+                soundTrue.Play();
             }
             else
             {
                 trash = "";
+                soundFalse.Play();
             }
         }
     }
@@ -121,6 +132,7 @@ public class GameController : MonoBehaviour
             gunLevel += 1;
             sumCoin -= 15;
             player.GetComponent<PlayerController>().bulletDamage += 5;
+            upgrade.Play();
         }
     }
 
@@ -220,6 +232,6 @@ public class GameController : MonoBehaviour
 
     public void Quit()
     {
-
+        SceneManager.LoadScene("Share");
     }
 }

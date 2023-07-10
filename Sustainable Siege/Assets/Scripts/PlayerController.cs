@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundedLayers;
     public GameObject bulletTemplate;
     public Transform bulletSpawnPoint;
+    public AudioSource gun, footstep;
 
     public float speed, bulletSpeed, rotationSmoothTime;
     public float groundedOffset = -0.14f;
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
         Gravity();
 
         timerAttack += Time.deltaTime;
-        if (timerAttack >= 1.10)
+        if (timerAttack >= 0.55)
         {
             animator.SetBool("Attack", false);
             speedCharacter = speed;
@@ -63,6 +64,15 @@ public class PlayerController : MonoBehaviour
             moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
             moveDirection.y += Time.deltaTime;
             controller.Move(moveDirection.normalized * speedCharacter * Time.deltaTime);
+        }
+
+        if (horizontal > 0 || vertical > 0)
+        {
+            footstep.enabled = true;
+        }
+        else
+        {
+            footstep.enabled = false;
         }
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal + vertical));
@@ -91,6 +101,7 @@ public class PlayerController : MonoBehaviour
             speedCharacter = 0;
             timerAttack = 0;
             gameController.GetComponent<GameController>().sumBullet -= 1;
+            gun.Play();
         }
     }
 
