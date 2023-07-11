@@ -24,7 +24,7 @@ public class ShareController : MonoBehaviour
 
     public void Share()
     {
-        message = "Saya berhasil membunuh " + StateText.sumZombie + " Zombie, dan saya berhasil mengumpulkan " + StateText.sumTrash + " Sampah. Aya bermain game Sustainable Sieg: Trash Tactic";
+        message = "Saya berhasil membunuh " + StateText.sumZombie + " Zombie, dan saya berhasil mengumpulkan " + StateText.sumTrash + " Sampah. Ayo bermain game Sustainable Siege: Trash Tactic";
         StartCoroutine(TakeScreenshot());
     }
 

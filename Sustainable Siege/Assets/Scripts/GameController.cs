@@ -223,6 +223,7 @@ public class GameController : MonoBehaviour
     public void Menu()
     {
         SceneManager.LoadScene("Menu");
+        Time.timeScale = 1f;
     }
 
     public void Retry()

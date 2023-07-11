@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: da31b3e30f1f3484b9bdf7133cde3c01, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3a81fa839d38a214cb35e3216e471443, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1650,6 +1650,10 @@ PrefabInstance:
     - target: {fileID: 7262449633543959348, guid: 69da84657c1056148955f5623e609d33, type: 3}
       propertyPath: m_Name
       value: Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262449633543959349, guid: 69da84657c1056148955f5623e609d33, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7262449633543959349, guid: 69da84657c1056148955f5623e609d33, type: 3}
       propertyPath: Priority
